@@ -1,0 +1,225 @@
+// Sudoku App Global Styles
+
+@use "variables" as *;
+@use "mixins" as *;
+
+// CSS Custom Properties (for theming)
+:root {
+  // Grid dimensions
+  --sudoku-grid-size: #{$sudoku-grid-size};
+  --sudoku-box-size: #{$sudoku-box-size};
+  --sudoku-cell-size: #{$sudoku-cell-size};
+
+  // Spacing
+  --sudoku-cell-gap: #{$sudoku-cell-gap};
+  --sudoku-box-gap: #{$sudoku-box-gap};
+
+  // Typography
+  --sudoku-font-size-value: #{$sudoku-font-size-value};
+  --sudoku-font-size-pencil: #{$sudoku-font-size-pencil};
+
+  // Animation
+  --sudoku-transition-speed: #{$sudoku-transition-speed};
+
+  // Default colors (overridden by theme)
+  --sudoku-cell-bg: #ffffff;
+  --sudoku-cell-border: #bdbdbd;
+  --sudoku-box-border: #212121;
+  --sudoku-given-text: #000000;
+  --sudoku-user-text: #1976d2;
+  --sudoku-conflict-bg: #ffcdd2;
+  --sudoku-selected-bg: #e3f2fd;
+  --sudoku-hint-text: #757575;
+  --sudoku-highlight-bg: #fff9c4;
+}
+
+// Dark mode overrides
+[data-theme="dark"] {
+  --sudoku-cell-bg: #303030;
+  --sudoku-cell-border: #424242;
+  --sudoku-box-border: #e0e0e0;
+  --sudoku-given-text: #ffffff;
+  --sudoku-user-text: #90caf9;
+  --sudoku-conflict-bg: #5d4037;
+  --sudoku-selected-bg: #1e3a5f;
+  --sudoku-hint-text: #9e9e9e;
+  --sudoku-highlight-bg: #5d4037;
+}
+
+// Grid size specific overrides
+[data-grid-size="4"] {
+  --sudoku-cell-size: 70px;
+  --sudoku-font-size-value: 32px;
+  --sudoku-font-size-pencil: 14px;
+}
+
+[data-grid-size="16"] {
+  --sudoku-cell-size: 35px;
+  --sudoku-font-size-value: 14px;
+  --sudoku-font-size-pencil: 7px;
+}
+
+[data-grid-size="25"] {
+  --sudoku-cell-size: 28px;
+  --sudoku-font-size-value: 11px;
+  --sudoku-font-size-pencil: 5px;
+}
+
+// Global resets
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+}
+
+// Focus visible styles
+:focus-visible {
+  @include focus-ring;
+}
+
+// Selection styling
+::selection {
+  background-color: var(--mui-palette-primary-light, #64b5f6);
+  color: var(--mui-palette-primary-contrastText, #ffffff);
+}
+
+// Bootstrap grid overrides for our layout
+.sudoku-layout {
+  display: flex;
+  flex-wrap: wrap;
+  min-height: calc(100vh - #{$header-height});
+  margin: 0;
+  padding: 0;
+}
+
+.sudoku-left-panel {
+  flex: 0 0 $sidebar-width;
+  max-width: $sidebar-width;
+  padding: 16px;
+  overflow-y: auto;
+  max-height: calc(100vh - #{$header-height});
+  @include custom-scrollbar;
+
+  @include md-down {
+    flex: 0 0 100%;
+    max-width: 100%;
+    order: 2;
+    max-height: none;
+  }
+}
+
+.sudoku-right-panel {
+  flex: 0 0 $main-content-width;
+  max-width: $main-content-width;
+  padding: 16px;
+  @include flex-center;
+  flex-direction: column;
+  gap: 16px;
+
+  @include md-down {
+    flex: 0 0 100%;
+    max-width: 100%;
+    order: 1;
+  }
+}
+
+// Responsive adjustments
+@include md-down {
+  :root {
+    --sudoku-cell-size: 38px;
+    --sudoku-font-size-value: 18px;
+    --sudoku-font-size-pencil: 8px;
+  }
+}
+
+@include sm-down {
+  :root {
+    --sudoku-cell-size: 32px;
+    --sudoku-font-size-value: 16px;
+    --sudoku-font-size-pencil: 7px;
+  }
+}
+
+// Utility classes
+.text-center {
+  text-align: center;
+}
+
+.text-muted {
+  color: var(--mui-palette-text-secondary, #666);
+}
+
+.mt-2 {
+  margin-top: 16px;
+}
+
+.mb-2 {
+  margin-bottom: 16px;
+}
+
+.gap-1 {
+  gap: 8px;
+}
+
+.gap-2 {
+  gap: 16px;
+}
+
+// Animation keyframes
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-4px);
+  }
+  75% {
+    transform: translateX(4px);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease;
+}
+
+.animate-pulse {
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.animate-shake {
+  animation: shake 0.3s ease;
+}

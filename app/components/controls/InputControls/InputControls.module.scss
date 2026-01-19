@@ -1,0 +1,46 @@
+@use "../../../styles/variables" as *;
+@use "../../../styles/mixins" as *;
+
+.panel {
+  margin-bottom: 16px;
+}
+
+.section {
+  margin-bottom: 16px;
+}
+
+.buttonLabel {
+  margin-left: 6px;
+}
+
+.historyButtons {
+  display: flex;
+  gap: 8px;
+}
+
+.randomPuzzleRow {
+  display: flex;
+  gap: 8px;
+  align-items: stretch;
+}
+
+.difficultySelect {
+  flex: 1;
+  min-width: 100px;
+}
+
+.instructions {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--mui-palette-divider, #e0e0e0);
+}
+
+.instructionList {
+  margin: 8px 0 0 0;
+  padding-left: 16px;
+  list-style-type: disc;
+
+  li {
+    margin-bottom: 4px;
+  }
+}

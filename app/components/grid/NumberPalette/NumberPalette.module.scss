@@ -1,0 +1,61 @@
+@use "../../../styles/variables" as *;
+@use "../../../styles/mixins" as *;
+
+.palette {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  padding: 16px;
+  background-color: var(--mui-palette-background-paper, #ffffff);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-width: 100%;
+}
+
+.number {
+  @include button-reset;
+  @include flex-center;
+  width: 44px;
+  height: 44px;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--mui-palette-primary-main, #1976d2);
+  background-color: var(--mui-palette-background-default, #f5f5f5);
+  border: 2px solid var(--mui-palette-primary-main, #1976d2);
+  border-radius: 8px;
+  cursor: grab;
+  @include transition(transform, background-color, box-shadow);
+
+  &:hover {
+    background-color: var(--mui-palette-primary-light, #64b5f6);
+    color: var(--mui-palette-primary-contrastText, #ffffff);
+    transform: scale(1.1);
+  }
+
+  &:active {
+    cursor: grabbing;
+    transform: scale(0.95);
+  }
+
+  &:focus-visible {
+    @include focus-ring;
+  }
+
+  @include md-down {
+    width: 36px;
+    height: 36px;
+    font-size: 14px;
+  }
+}
+
+.dragging {
+  opacity: 0.5;
+  cursor: grabbing;
+}
+
+.highlighted {
+  background-color: var(--mui-palette-primary-main, #1976d2);
+  color: var(--mui-palette-primary-contrastText, #ffffff);
+  box-shadow: 0 2px 8px rgba(25, 118, 210, 0.4);
+}

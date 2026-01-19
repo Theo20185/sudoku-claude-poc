@@ -1,0 +1,52 @@
+@use "../../../styles/variables" as *;
+@use "../../../styles/mixins" as *;
+
+.grid {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--sudoku-box-border, #212121);
+  border: 3px solid var(--sudoku-box-border, #212121);
+  border-radius: 4px;
+  gap: var(--sudoku-cell-gap);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+  // Add thicker borders between boxes
+  .row {
+    display: flex;
+    gap: var(--sudoku-cell-gap);
+
+    // Add extra gap after box boundaries
+    &:nth-child(#{$sudoku-box-size}n):not(:last-child) {
+      margin-bottom: var(--sudoku-box-gap);
+    }
+  }
+
+  // Dynamic box gaps based on grid size
+  &[data-grid-size="4"] {
+    .row:nth-child(2n):not(:last-child) {
+      margin-bottom: var(--sudoku-box-gap);
+    }
+  }
+
+  &[data-grid-size="9"] {
+    .row:nth-child(3n):not(:last-child) {
+      margin-bottom: var(--sudoku-box-gap);
+    }
+  }
+
+  &[data-grid-size="16"] {
+    .row:nth-child(4n):not(:last-child) {
+      margin-bottom: var(--sudoku-box-gap);
+    }
+  }
+
+  &[data-grid-size="25"] {
+    .row:nth-child(5n):not(:last-child) {
+      margin-bottom: var(--sudoku-box-gap);
+    }
+  }
+}
+
+.row {
+  display: flex;
+}

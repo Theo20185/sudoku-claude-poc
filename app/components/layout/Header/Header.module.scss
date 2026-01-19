@@ -1,0 +1,35 @@
+@use "../../../styles/variables" as *;
+@use "../../../styles/mixins" as *;
+
+.header {
+  height: $header-height;
+}
+
+.toolbar {
+  @include flex-between;
+  height: 100%;
+  padding: 0 16px;
+}
+
+.title {
+  font-weight: 600;
+  letter-spacing: -0.5px;
+}
+
+.center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+
+  @include md-down {
+    position: static;
+    transform: none;
+    margin: 0 auto;
+  }
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}

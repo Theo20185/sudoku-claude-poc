@@ -1,0 +1,35 @@
+// Sudoku App SCSS Variables
+
+// Grid dimensions
+$sudoku-grid-size: 9;
+$sudoku-box-size: 3;
+$sudoku-cell-size: 50px;
+
+// Spacing
+$sudoku-cell-gap: 1px;
+$sudoku-box-gap: 3px;
+
+// Typography
+$sudoku-font-size-value: 24px;
+$sudoku-font-size-pencil: 10px;
+
+// Animation
+$sudoku-transition-speed: 150ms;
+
+// Breakpoints (matching Bootstrap)
+$breakpoint-sm: 576px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 992px;
+$breakpoint-xl: 1200px;
+
+// Layout
+$sidebar-width: 33.333%;
+$main-content-width: 66.667%;
+$header-height: 64px;
+
+// Z-index scale
+$z-index-dropdown: 1000;
+$z-index-modal-backdrop: 1040;
+$z-index-modal: 1050;
+$z-index-popover: 1060;
+$z-index-tooltip: 1070;

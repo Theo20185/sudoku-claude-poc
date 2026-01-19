@@ -1,0 +1,94 @@
+@use "../../../styles/variables" as *;
+@use "../../../styles/mixins" as *;
+
+.panel {
+  margin-bottom: 16px;
+}
+
+.header {
+  @include flex-between;
+  margin-bottom: 12px;
+}
+
+.titleRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.modeToggle {
+  margin-bottom: 12px;
+}
+
+.divider {
+  margin: 12px 0;
+}
+
+.message {
+  text-align: center;
+  padding: 16px 0;
+}
+
+.hintContent {
+  padding: 8px 0;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.confident {
+  display: block;
+  margin-top: 8px;
+  font-weight: 500;
+}
+
+.allHints {
+  max-height: 300px;
+  overflow-y: auto;
+  @include custom-scrollbar;
+}
+
+.hintItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 0;
+  border-bottom: 1px solid var(--mui-palette-divider, #e0e0e0);
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.cellLabel {
+  min-width: 48px;
+  color: var(--mui-palette-text-secondary, #666);
+}
+
+.hintValues {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.hintValue {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  font-size: 12px;
+  background-color: var(--mui-palette-action-hover, #f5f5f5);
+  border-radius: 4px;
+  padding: 0 4px;
+
+  &.confident {
+    background-color: var(--mui-palette-primary-main, #1976d2);
+    color: var(--mui-palette-primary-contrastText, #ffffff);
+    font-weight: 600;
+  }
+}

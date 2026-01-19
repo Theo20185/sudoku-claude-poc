@@ -1,0 +1,18 @@
+@use "../../../styles/mixins" as *;
+
+.selector {
+  background-color: var(--mui-palette-background-paper, #ffffff);
+  border-radius: 8px;
+}
+
+.button {
+  min-width: 60px;
+  font-weight: 500;
+  color: var(--mui-palette-text-primary, #000000);
+
+  @include sm-down {
+    min-width: 48px;
+    padding: 4px 8px;
+    font-size: 0.75rem;
+  }
+}

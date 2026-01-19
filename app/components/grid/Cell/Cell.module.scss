@@ -1,0 +1,89 @@
+@use "../../../styles/variables" as *;
+@use "../../../styles/mixins" as *;
+
+.cell {
+  @include cell-base;
+  @include transition(background-color, box-shadow, transform);
+
+  &:hover:not(.given) {
+    background-color: var(--mui-palette-action-hover, #f5f5f5);
+  }
+
+  &:focus-visible {
+    @include focus-ring;
+    z-index: 1;
+  }
+}
+
+.selected {
+  background-color: var(--sudoku-selected-bg, #e3f2fd) !important;
+  box-shadow: inset 0 0 0 2px var(--mui-palette-primary-main, #1976d2);
+}
+
+.related {
+  background-color: var(--mui-palette-action-selected, #f0f0f0);
+}
+
+.highlighted {
+  background-color: var(--sudoku-highlight-bg, #fff9c4) !important;
+}
+
+.given {
+  cursor: default;
+
+  .value {
+    font-weight: 700;
+    color: var(--sudoku-given-text, #000000);
+  }
+}
+
+.conflict {
+  background-color: var(--sudoku-conflict-bg, #ffcdd2) !important;
+  animation: shake 0.3s ease;
+}
+
+.dragOver {
+  background-color: var(--mui-palette-primary-light, #64b5f6) !important;
+  transform: scale(1.05);
+}
+
+.dragInvalid {
+  background-color: var(--mui-palette-error-light, #ef9a9a) !important;
+  cursor: not-allowed;
+}
+
+.value {
+  font-size: var(--sudoku-font-size-value, 24px);
+  font-weight: 500;
+  color: var(--sudoku-user-text, #1976d2);
+  user-select: none;
+  line-height: 1;
+}
+
+.pencilMarks {
+  display: grid;
+  grid-template-columns: repeat(var(--pencil-cols, 3), 1fr);
+  position: absolute;
+  inset: 2px;
+  pointer-events: none;
+}
+
+.mark {
+  font-size: var(--sudoku-font-size-pencil, 10px);
+  color: var(--sudoku-hint-text, #757575);
+  @include flex-center;
+  line-height: 1;
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-2px);
+  }
+  75% {
+    transform: translateX(2px);
+  }
+}
