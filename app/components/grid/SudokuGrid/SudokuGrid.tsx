@@ -4,7 +4,7 @@
  * Main grid component that renders the sudoku puzzle with variable sizes.
  */
 
-import { useMemo, useCallback, useEffect } from "react";
+import { useMemo, useCallback, useEffect, useRef } from "react";
 import { usePuzzleStore } from "../../../store/puzzleStore";
 import { useUIStore } from "../../../store/uiStore";
 import { Cell } from "../Cell/Cell";
@@ -25,6 +25,7 @@ export function SudokuGrid() {
   const clearCell = usePuzzleStore((state) => state.clearCell);
 
   const boxSize = Math.sqrt(gridSize);
+  const gridRef = useRef<HTMLDivElement>(null);
 
   // Generate grid coordinates
   const gridCoordinates = useMemo(() => {
@@ -129,6 +130,36 @@ export function SudokuGrid() {
     };
   }, [handleKeyDown]);
 
+  // Click outside to deselect
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        gridRef.current &&
+        !gridRef.current.contains(event.target as Node) &&
+        selectedCell !== null
+      ) {
+        // Check if click is on an interactive element (buttons, inputs, etc.)
+        const target = event.target as HTMLElement;
+        const isInteractive =
+          target.closest("button") ||
+          target.closest("input") ||
+          target.closest('[role="button"]') ||
+          target.closest('[role="dialog"]') ||
+          target.closest('[data-testid="number-palette"]');
+
+        // Only deselect if not clicking on interactive elements
+        if (!isInteractive) {
+          selectCell(null);
+        }
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [selectedCell, selectCell]);
+
   // Determine if a cell should be highlighted
   const isHighlighted = useCallback(
     (coord: Coordinate) => {
@@ -166,7 +197,9 @@ export function SudokuGrid() {
 
   return (
     <div
+      ref={gridRef}
       className={styles.grid}
+      data-testid="sudoku-grid"
       data-grid-size={gridSize}
       style={
         {

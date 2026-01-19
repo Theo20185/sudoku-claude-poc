@@ -98,12 +98,14 @@ let searchAbortController: AbortController | null = null;
 
 const createInitialState = (size: GridSize = 9): PuzzleStoreState => {
   const grid = new Grid(size);
+  const cells = grid.getCellsMap();
   return {
     gridSize: size,
-    cells: grid.getCellsMap(),
+    cells,
     status: PuzzleStatus.EDITING,
-    history: [],
-    historyIndex: -1,
+    // Initialize history with initial state
+    history: [{ cells: cloneCellsMap(cells), timestamp: Date.now() }],
+    historyIndex: 0,
     solutions: [],
     currentSolutionIndex: 0,
     searchProgress: null,
@@ -121,12 +123,14 @@ export const usePuzzleStore = create<PuzzleStore>()(
 
         initializePuzzle: (size) => {
           const grid = new Grid(size);
+          const cellsMap = grid.getCellsMap();
           set((state) => {
             state.gridSize = size;
-            state.cells = grid.getCellsMap();
+            state.cells = cellsMap;
             state.status = PuzzleStatus.EDITING;
-            state.history = [];
-            state.historyIndex = -1;
+            // Initialize history with current state
+            state.history = [{ cells: cloneCellsMap(cellsMap), timestamp: Date.now() }];
+            state.historyIndex = 0;
             state.solutions = [];
             state.currentSolutionIndex = 0;
             state.searchProgress = null;
@@ -157,12 +161,14 @@ export const usePuzzleStore = create<PuzzleStore>()(
           grid.calculatePossibleValues();
           grid.validateAll();
 
+          const cellsMap = grid.getCellsMap();
           set((state) => {
             state.gridSize = size;
-            state.cells = grid.getCellsMap();
+            state.cells = cellsMap;
             state.status = PuzzleStatus.SOLVING;
-            state.history = [];
-            state.historyIndex = -1;
+            // Initialize history with loaded state
+            state.history = [{ cells: cloneCellsMap(cellsMap), timestamp: Date.now() }];
+            state.historyIndex = 0;
             state.solutions = [];
             state.error = null;
           });
@@ -185,9 +191,13 @@ export const usePuzzleStore = create<PuzzleStore>()(
           }
           grid.calculatePossibleValues();
 
+          const cellsMap = grid.getCellsMap();
           set((state) => {
-            state.cells = grid.getCellsMap();
+            state.cells = cellsMap;
             state.status = PuzzleStatus.SOLVING;
+            // Initialize history with reset state
+            state.history = [{ cells: cloneCellsMap(cellsMap), timestamp: Date.now() }];
+            state.historyIndex = 0;
             state.solutions = [];
             state.currentSolutionIndex = 0;
           });
@@ -196,11 +206,13 @@ export const usePuzzleStore = create<PuzzleStore>()(
         clear: () => {
           const { gridSize } = get();
           const grid = new Grid(gridSize);
+          const cellsMap = grid.getCellsMap();
           set((state) => {
-            state.cells = grid.getCellsMap();
+            state.cells = cellsMap;
             state.status = PuzzleStatus.EDITING;
-            state.history = [];
-            state.historyIndex = -1;
+            // Initialize history with cleared state
+            state.history = [{ cells: cloneCellsMap(cellsMap), timestamp: Date.now() }];
+            state.historyIndex = 0;
             state.solutions = [];
             state.error = null;
           });
@@ -228,9 +240,6 @@ export const usePuzzleStore = create<PuzzleStore>()(
             return;
           }
 
-          // Save to history before making changes
-          get().saveToHistory();
-
           // Create updated grid with new value
           const grid = get().getGrid();
           grid.setValue(coord, validation.sanitized);
@@ -255,6 +264,9 @@ export const usePuzzleStore = create<PuzzleStore>()(
             state.cells = grid.getCellsMap();
             state.status = newStatus;
           });
+
+          // Save to history AFTER making changes
+          get().saveToHistory();
         },
 
         setCellById: (id, value) => {
@@ -276,16 +288,26 @@ export const usePuzzleStore = create<PuzzleStore>()(
 
         togglePencilMark: (coord, value) => {
           const id = coordToId(coord);
+          const cell = get().cells.get(id);
+
+          // Check if we can modify this cell
+          if (!cell || cell.value !== null) {
+            return;
+          }
+
           set((state) => {
-            const cell = state.cells.get(id);
-            if (cell && cell.value === null) {
-              if (cell.pencilMarks.has(value)) {
-                cell.pencilMarks.delete(value);
+            const stateCell = state.cells.get(id);
+            if (stateCell && stateCell.value === null) {
+              if (stateCell.pencilMarks.has(value)) {
+                stateCell.pencilMarks.delete(value);
               } else {
-                cell.pencilMarks.add(value);
+                stateCell.pencilMarks.add(value);
               }
             }
           });
+
+          // Save to history AFTER making changes
+          get().saveToHistory();
         },
 
         clearCell: (coord) => {
@@ -298,9 +320,6 @@ export const usePuzzleStore = create<PuzzleStore>()(
             return;
           }
 
-          // Save to history before making changes
-          get().saveToHistory();
-
           // Create updated grid with cleared cell
           const grid = get().getGrid();
           grid.clearCell(coord);
@@ -311,6 +330,9 @@ export const usePuzzleStore = create<PuzzleStore>()(
             state.cells = grid.getCellsMap();
             state.status = PuzzleStatus.SOLVING;
           });
+
+          // Save to history AFTER making changes
+          get().saveToHistory();
         },
 
         saveToHistory: () => {
@@ -336,6 +358,7 @@ export const usePuzzleStore = create<PuzzleStore>()(
 
         undo: () => {
           set((state) => {
+            // Can only undo if not at initial state
             if (state.historyIndex > 0) {
               state.historyIndex--;
               const snapshot = state.history[state.historyIndex];
@@ -346,6 +369,7 @@ export const usePuzzleStore = create<PuzzleStore>()(
 
         redo: () => {
           set((state) => {
+            // Can only redo if not at latest state
             if (state.historyIndex < state.history.length - 1) {
               state.historyIndex++;
               const snapshot = state.history[state.historyIndex];
@@ -414,6 +438,11 @@ export const usePuzzleStore = create<PuzzleStore>()(
                 state.status = PuzzleStatus.NO_SOLUTION;
               }
             });
+
+            // Show first solution if any were found
+            if (result.solutions.length > 0) {
+              get().showSolution(0);
+            }
           } catch (error) {
             set((state) => {
               state.error =

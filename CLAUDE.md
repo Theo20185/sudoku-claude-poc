@@ -13,7 +13,7 @@ A feature-rich Sudoku application with puzzle solving, generation, and an intera
 - **UI:** Material-UI (MUI) 6
 - **Styling:** SCSS modules + MUI theming
 - **Interactions:** react-dnd (drag-and-drop)
-- **Testing:** Vitest
+- **Testing:** Playwright (E2E)
 
 ## Project Structure
 
@@ -29,6 +29,7 @@ app/
 ├── components/     # React UI components
 ├── styles/         # Global styles, theme, mixins
 └── routes/         # Page routes
+e2e/                # Playwright E2E tests
 ```
 
 ## Key Conventions
@@ -36,9 +37,10 @@ app/
 ### Grid Representation
 
 - **Cell ID format:** `r{row}c{col}` (e.g., `r0c5` for row 0, column 5)
-- **Grid sizes supported:** 4×4, 9×9, 16×16, 25×25
-- **Values:** 1-9 for 9×9, 1-16 for 16×16, etc. (null for empty)
-- **Puzzle string format:** 81 chars for 9×9, using digits 1-9 and `.` or `0` for empty
+- **Grid size:** 9×9 (81 cells)
+- **Values:** 1-9 (null for empty)
+- **Puzzle string format:** 81 chars using digits 1-9 and `.` or `0` for empty
+- **Import formats:** Single-line, multi-line, with optional formatting chars (`|`, `-`, `+`, `:`) stripped
 
 ### State Management
 
@@ -63,9 +65,10 @@ app/
 
 ### Testing
 
-- Tests use Vitest
-- Test files: `*.test.ts` or `*.test.tsx`
-- Core logic should have unit tests
+- E2E tests use Playwright in `e2e/` folder
+- Test files: `*.spec.ts`
+- Run tests: `npx playwright test`
+- Test spec documentation: `e2e/TEST-SPEC.md`
 
 ## Common Tasks
 

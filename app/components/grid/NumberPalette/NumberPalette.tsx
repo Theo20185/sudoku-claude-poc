@@ -93,6 +93,7 @@ const DraggableNumber = memo(function DraggableNumber({
       onMouseEnter={onHover}
       onMouseLeave={onLeave}
       aria-label={`Number ${value}`}
+      data-testid={`palette-${value}`}
       type="button"
     >
       {valueToSymbol(value, gridSize as any)}

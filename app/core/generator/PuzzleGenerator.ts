@@ -11,33 +11,13 @@ import type { GridSize } from "../models/types";
 
 /**
  * Configuration for puzzle generation based on difficulty.
- * These control the target number of clues for each difficulty level.
+ * These control the target number of clues for each difficulty level (9x9 grid).
  */
-const DIFFICULTY_CLUES: Record<Difficulty, Record<GridSize, { min: number; max: number }>> = {
-  [Difficulty.EASY]: {
-    4: { min: 8, max: 10 },
-    9: { min: 36, max: 45 },
-    16: { min: 120, max: 150 },
-    25: { min: 300, max: 380 },
-  },
-  [Difficulty.MEDIUM]: {
-    4: { min: 6, max: 7 },
-    9: { min: 28, max: 35 },
-    16: { min: 90, max: 119 },
-    25: { min: 220, max: 299 },
-  },
-  [Difficulty.HARD]: {
-    4: { min: 4, max: 5 },
-    9: { min: 22, max: 27 },
-    16: { min: 60, max: 89 },
-    25: { min: 150, max: 219 },
-  },
-  [Difficulty.EXPERT]: {
-    4: { min: 4, max: 4 },
-    9: { min: 17, max: 21 },
-    16: { min: 40, max: 59 },
-    25: { min: 100, max: 149 },
-  },
+const DIFFICULTY_CLUES: Record<Difficulty, { min: number; max: number }> = {
+  [Difficulty.EASY]: { min: 36, max: 45 },
+  [Difficulty.MEDIUM]: { min: 28, max: 35 },
+  [Difficulty.HARD]: { min: 22, max: 27 },
+  [Difficulty.EXPERT]: { min: 17, max: 21 },
 };
 
 export class PuzzleGenerator {
@@ -153,8 +133,8 @@ export class PuzzleGenerator {
   /**
    * Get the target number of clues for a given difficulty.
    */
-  private getTargetClues(size: GridSize, difficulty: Difficulty): number {
-    const range = DIFFICULTY_CLUES[difficulty][size];
+  private getTargetClues(_size: GridSize, difficulty: Difficulty): number {
+    const range = DIFFICULTY_CLUES[difficulty];
     return Math.floor(Math.random() * (range.max - range.min + 1)) + range.min;
   }
 

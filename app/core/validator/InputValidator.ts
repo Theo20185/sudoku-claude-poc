@@ -23,8 +23,9 @@ export class InputValidator {
     // Sanitize input - remove potentially dangerous characters
     const sanitized = this.sanitizeString(input);
 
-    // Remove whitespace and normalize
-    const cleaned = sanitized.replace(/\s+/g, "").toUpperCase();
+    // Remove whitespace, formatting characters (|, -, +, :), and normalize
+    // These characters are often used in visual grid representations
+    const cleaned = sanitized.replace(/[\s|+\-:]+/g, "").toUpperCase();
 
     const expectedLength = expectedSize * expectedSize;
 
@@ -98,14 +99,6 @@ export class InputValidator {
           sanitized: null,
           error: `Value must be between 1 and ${gridSize}`,
         };
-      }
-
-      // Try letter parse (for grids > 9)
-      if (gridSize > 9 && sanitized.length === 1) {
-        const charValue = this.charToValue(sanitized, gridSize);
-        if (charValue !== null && charValue >= 1 && charValue <= gridSize) {
-          return { valid: true, sanitized: charValue };
-        }
       }
 
       return {
@@ -184,7 +177,7 @@ export class InputValidator {
       return {
         valid: false,
         sanitized: null,
-        error: "Grid size must be 4, 9, 16, or 25",
+        error: "Grid size must be 9",
       };
     }
 
@@ -262,36 +255,21 @@ export class InputValidator {
   }
 
   /**
-   * Get valid characters for a grid size.
+   * Get valid characters for the grid (1-9 for standard Sudoku).
    */
-  private static getValidCharacters(size: GridSize): string[] {
-    const chars: string[] = [];
-    for (let i = 1; i <= size; i++) {
-      if (i <= 9) {
-        chars.push(String(i));
-      } else {
-        chars.push(String.fromCharCode(55 + i)); // A, B, C, etc.
-      }
-    }
-    return chars;
+  private static getValidCharacters(_size: GridSize): string[] {
+    return ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
   }
 
   /**
-   * Convert a character to its numeric value.
+   * Convert a character to its numeric value (1-9 for standard Sudoku).
    */
-  private static charToValue(char: string, size: GridSize): number | null {
+  private static charToValue(char: string, _size: GridSize): number | null {
     const code = char.charCodeAt(0);
 
     // '1' to '9'
     if (code >= 49 && code <= 57) {
-      const value = code - 48;
-      return value <= size ? value : null;
-    }
-
-    // 'A' to 'Z' (for grids > 9)
-    if (code >= 65 && code <= 90) {
-      const value = code - 55; // A=10, B=11, etc.
-      return value <= size ? value : null;
+      return code - 48;
     }
 
     return null;

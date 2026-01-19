@@ -46,25 +46,6 @@
   --sudoku-highlight-bg: #5d4037;
 }
 
-// Grid size specific overrides
-[data-grid-size="4"] {
-  --sudoku-cell-size: 70px;
-  --sudoku-font-size-value: 32px;
-  --sudoku-font-size-pencil: 14px;
-}
-
-[data-grid-size="16"] {
-  --sudoku-cell-size: 35px;
-  --sudoku-font-size-value: 14px;
-  --sudoku-font-size-pencil: 7px;
-}
-
-[data-grid-size="25"] {
-  --sudoku-cell-size: 28px;
-  --sudoku-font-size-value: 11px;
-  --sudoku-font-size-pencil: 5px;
-}
-
 // Global resets
 *,
 *::before,

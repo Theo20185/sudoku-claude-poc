@@ -61,7 +61,8 @@ export function MyComponent({ required, optional = 10 }: MyComponentProps) {
 ### SudokuGrid (`grid/SudokuGrid`)
 - Renders full grid with box borders
 - Manages cell selection and navigation
-- Keyboard event handling
+- Keyboard event handling (arrows, numbers, delete)
+- Click-outside-to-deselect (deselects cell when clicking outside grid, except on interactive elements)
 
 ### NumberPalette (`grid/NumberPalette`)
 - Draggable number buttons

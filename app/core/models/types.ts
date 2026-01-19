@@ -2,8 +2,8 @@
  * Core type definitions for the Sudoku application
  */
 
-/** Grid size must be a perfect square (4, 9, 16, 25) */
-export type GridSize = 4 | 9 | 16 | 25;
+/** Grid size - fixed at 9x9 for standard Sudoku */
+export type GridSize = 9;
 
 /** Cell value: 1 to gridSize, or null for empty */
 export type CellValue = number | null;

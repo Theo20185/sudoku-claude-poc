@@ -47,19 +47,9 @@ export function createPuzzleConfig(size: GridSize): PuzzleConfig {
 /**
  * Get minimum number of clues for a unique solution
  */
-export function getMinimumClues(size: GridSize): number {
-  const proven: Partial<Record<GridSize, number>> = {
-    4: 4,
-    9: 17,
-  };
-
-  if (proven[size] !== undefined) {
-    return proven[size]!;
-  }
-
-  // Estimate for larger sizes
-  const n = Math.sqrt(size);
-  return Math.ceil(17 * Math.pow(n / 3, 2.2));
+export function getMinimumClues(_size: GridSize): number {
+  // For 9x9 Sudoku, the proven minimum is 17
+  return 17;
 }
 
 /**
@@ -163,21 +153,10 @@ export function* iterateGrid(size: GridSize): Generator<Coordinate> {
 }
 
 /**
- * Get symbol set for a given grid size
+ * Get symbol set for the grid (1-9 for standard Sudoku)
  */
-export function getSymbolSet(size: GridSize): string[] {
-  if (size <= 9) {
-    return Array.from({ length: size }, (_, i) => String(i + 1));
-  }
-  const symbols: string[] = [];
-  for (let i = 1; i <= size; i++) {
-    if (i <= 9) {
-      symbols.push(String(i));
-    } else {
-      symbols.push(String.fromCharCode(55 + i));
-    }
-  }
-  return symbols;
+export function getSymbolSet(_size: GridSize): string[] {
+  return ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
 }
 
 /**
@@ -198,11 +177,10 @@ export function symbolToValue(symbol: string, gridSize: GridSize): number | null
 }
 
 /**
- * Check if a grid size is valid (perfect square)
+ * Check if a grid size is valid (must be 9 for standard Sudoku)
  */
 export function isValidGridSize(size: number): size is GridSize {
-  const validSizes: GridSize[] = [4, 9, 16, 25];
-  return validSizes.includes(size as GridSize);
+  return size === 9;
 }
 
 /**

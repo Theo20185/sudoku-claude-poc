@@ -54,13 +54,13 @@ togglePencilMark(coord, value): void
 clearCell(coord): void
 
 // Solving
-solve(): Promise<boolean>
-findAllSolutions(options?): Promise<void>
-autoFillConfident(): number
+solve(): Promise<boolean>           // Solves and displays first solution
+findAllSolutions(options?): Promise<void>  // Finds all solutions, displays first one
+autoFillConfident(): number         // Fills cells with single possibility
 
-// History
-undo(): void
-redo(): void
+// History (saved AFTER changes, not before)
+undo(): void    // Reverts to previous state (disabled at historyIndex 0)
+redo(): void    // Re-applies undone state
 ```
 
 ## uiStore

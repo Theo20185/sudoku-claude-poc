@@ -15,7 +15,7 @@ Pure business logic with no React dependencies. Can be tested independently.
 ## Key Types (`models/types.ts`)
 
 ```typescript
-type GridSize = 4 | 9 | 16 | 25;
+type GridSize = 9;  // Fixed at 9x9 for standard Sudoku
 type CellValue = number | null;
 
 interface CellState {
@@ -73,6 +73,21 @@ This method computes candidate values for all empty cells using full constraint 
 3. **Hidden singles**: If a value can only go in one cell within a unit (row/column/box), reduce that cell to only that value
 
 The algorithm loops until no more eliminations can be made. This ensures hints accurately reflect logically forced values - if cell A must be 3, then 3 won't appear as a possibility in any of A's peers, even before the user places the value.
+
+## InputValidator (`validator/InputValidator.ts`)
+
+Sanitizes and validates user input for puzzle import.
+
+```typescript
+InputValidator.parseTextInput(input: string, gridSize: GridSize): ValidationResult
+```
+
+**Supported formats:**
+- Single-line: `530070000600195000...`
+- Multi-line: 9 lines of 9 digits
+- With formatting: `5 3 0 | 0 7 0 | 0 0 0` (pipes, dashes, plus signs stripped)
+
+**Cleaning regex:** `/[\s|+\-:]+/g` - removes whitespace and formatting characters
 
 ## Design Principles
 

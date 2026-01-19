@@ -95,6 +95,7 @@ export const Cell = memo(function Cell({
         cell.value ? `, Value ${cell.value}` : ", Empty"
       }`}
       aria-selected={isSelected}
+      data-cell={cell.id}
       data-row={cell.coordinate.row}
       data-col={cell.coordinate.col}
       style={{

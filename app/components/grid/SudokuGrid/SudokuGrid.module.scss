@@ -21,30 +21,6 @@
     }
   }
 
-  // Dynamic box gaps based on grid size
-  &[data-grid-size="4"] {
-    .row:nth-child(2n):not(:last-child) {
-      margin-bottom: var(--sudoku-box-gap);
-    }
-  }
-
-  &[data-grid-size="9"] {
-    .row:nth-child(3n):not(:last-child) {
-      margin-bottom: var(--sudoku-box-gap);
-    }
-  }
-
-  &[data-grid-size="16"] {
-    .row:nth-child(4n):not(:last-child) {
-      margin-bottom: var(--sudoku-box-gap);
-    }
-  }
-
-  &[data-grid-size="25"] {
-    .row:nth-child(5n):not(:last-child) {
-      margin-bottom: var(--sudoku-box-gap);
-    }
-  }
 }
 
 .row {

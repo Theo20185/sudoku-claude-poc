@@ -29,6 +29,7 @@ export function Header() {
               color="inherit"
               onClick={toggleMode}
               aria-label="Toggle theme"
+              data-testid="theme-toggle"
             >
               {effectiveMode === "light" ? <DarkModeIcon /> : <LightModeIcon />}
             </IconButton>

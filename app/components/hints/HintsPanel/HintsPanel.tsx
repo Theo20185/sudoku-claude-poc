@@ -71,7 +71,7 @@ export function HintsPanel() {
   };
 
   return (
-    <Card className={styles.panel}>
+    <Card className={styles.panel} data-testid="hints-panel">
       <CardContent>
         <Box className={styles.header}>
           <Box className={styles.titleRow}>
@@ -86,6 +86,7 @@ export function HintsPanel() {
                 checked={showHints}
                 onChange={toggleHints}
                 size="small"
+                data-testid="hints-toggle"
               />
             }
             label=""
@@ -102,9 +103,9 @@ export function HintsPanel() {
               fullWidth
               className={styles.modeToggle}
             >
-              <ToggleButton value="selected">Selected</ToggleButton>
-              <ToggleButton value="all">All</ToggleButton>
-              <ToggleButton value="none">None</ToggleButton>
+              <ToggleButton value="selected" data-testid="hints-mode-selected">Selected</ToggleButton>
+              <ToggleButton value="all" data-testid="hints-mode-all">All</ToggleButton>
+              <ToggleButton value="none" data-testid="hints-mode-none">None</ToggleButton>
             </ToggleButtonGroup>
 
             <Divider className={styles.divider} />

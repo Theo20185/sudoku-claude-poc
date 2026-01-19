@@ -106,6 +106,7 @@ export function SolverControls() {
                 onClick={handleSolve}
                 disabled={isSearching || status === "solved"}
                 fullWidth
+                data-testid="solve-btn"
               >
                 Solve
               </Button>
@@ -120,6 +121,7 @@ export function SolverControls() {
                 onClick={handleFindAll}
                 disabled={isSearching}
                 fullWidth
+                data-testid="find-all-btn"
               >
                 Find All
               </Button>
@@ -134,6 +136,7 @@ export function SolverControls() {
                 onClick={handleAutoFill}
                 disabled={isSearching || status === "solved"}
                 fullWidth
+                data-testid="auto-fill-btn"
               >
                 Auto-Fill
               </Button>
@@ -143,10 +146,10 @@ export function SolverControls() {
 
         {/* Search progress */}
         {isSearching && (
-          <Box className={styles.progress}>
+          <Box className={styles.progress} data-testid="searching-indicator">
             <Box className={styles.progressHeader}>
               <Typography variant="body2">Searching...</Typography>
-              <IconButton size="small" onClick={cancelSearch}>
+              <IconButton size="small" onClick={cancelSearch} data-testid="cancel-search-btn">
                 <StopIcon fontSize="small" />
               </IconButton>
             </Box>
@@ -164,19 +167,21 @@ export function SolverControls() {
         {/* Solutions navigation */}
         {solutions.length > 1 && !isSearching && (
           <Box className={styles.solutionNav}>
-            <Typography variant="body2">
+            <Typography variant="body2" data-testid="solution-count">
               Solution {currentSolutionIndex + 1} of {solutions.length}
             </Typography>
             <ButtonGroup size="small">
               <IconButton
                 onClick={prevSolution}
                 disabled={currentSolutionIndex === 0}
+                data-testid="prev-solution-btn"
               >
                 <NavigateBefore />
               </IconButton>
               <IconButton
                 onClick={nextSolution}
                 disabled={currentSolutionIndex === solutions.length - 1}
+                data-testid="next-solution-btn"
               >
                 <NavigateNext />
               </IconButton>
@@ -221,6 +226,7 @@ export function SolverControls() {
             startIcon={<ResetIcon />}
             onClick={handleReset}
             size="small"
+            data-testid="reset-btn"
           >
             Reset
           </Button>
@@ -230,6 +236,7 @@ export function SolverControls() {
             onClick={handleClear}
             size="small"
             color="error"
+            data-testid="clear-all-btn"
           >
             Clear All
           </Button>

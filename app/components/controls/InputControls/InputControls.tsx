@@ -95,13 +95,13 @@ export function InputControls() {
             fullWidth
           >
             <Tooltip title="Enter values (keyboard numbers or click)">
-              <ToggleButton value="value">
+              <ToggleButton value="value" data-testid="value-mode-toggle">
                 <ValueIcon fontSize="small" />
                 <span className={styles.buttonLabel}>Value</span>
               </ToggleButton>
             </Tooltip>
             <Tooltip title="Enter pencil marks (notes)">
-              <ToggleButton value="pencil">
+              <ToggleButton value="pencil" data-testid="pencil-mode-toggle" aria-pressed={inputMode === "pencil"}>
                 <PencilIcon fontSize="small" />
                 <span className={styles.buttonLabel}>Pencil</span>
               </ToggleButton>
@@ -116,6 +116,7 @@ export function InputControls() {
             startIcon={<TextInputIcon />}
             onClick={openTextInput}
             fullWidth
+            data-testid="import-puzzle-btn"
           >
             Import Puzzle
           </Button>
@@ -131,9 +132,10 @@ export function InputControls() {
               <Select
                 value={difficulty}
                 onChange={handleDifficultyChange}
+                data-testid="difficulty-select"
               >
                 {Object.values(Difficulty).map((diff) => (
-                  <MenuItem key={diff} value={diff}>
+                  <MenuItem key={diff} value={diff} data-value={diff}>
                     {difficultyLabels[diff]}
                   </MenuItem>
                 ))}
@@ -144,6 +146,7 @@ export function InputControls() {
                 variant="contained"
                 startIcon={<RandomIcon />}
                 onClick={handleRandomPuzzle}
+                data-testid="generate-btn"
               >
                 Generate
               </Button>
@@ -164,6 +167,7 @@ export function InputControls() {
                   onClick={undo}
                   disabled={!canUndo}
                   size="small"
+                  data-testid="undo-btn"
                 >
                   <UndoIcon fontSize="small" />
                 </Button>
@@ -176,6 +180,7 @@ export function InputControls() {
                   onClick={redo}
                   disabled={!canRedo}
                   size="small"
+                  data-testid="redo-btn"
                 >
                   <RedoIcon fontSize="small" />
                 </Button>

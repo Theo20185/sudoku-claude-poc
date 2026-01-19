@@ -40,13 +40,17 @@ export function TextInputDialog() {
     }
   }, [isOpen]);
 
+  // Regex to remove whitespace and common formatting characters (|, -, +, :)
+  // Matches the InputValidator.parseTextInput cleaning logic
+  const cleanRegex = /[\s|+\-:]+/g;
+
   const handleTextChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = event.target.value;
     setInputText(value);
     setError(null);
 
     // Validate as user types
-    const cleaned = value.replace(/\s+/g, "");
+    const cleaned = value.replace(cleanRegex, "");
     if (cleaned.length > 0 && cleaned.length !== expectedLength) {
       // Don't show error while typing unless clearly wrong
       if (cleaned.length > expectedLength) {
@@ -73,41 +77,27 @@ export function TextInputDialog() {
     closeDialog();
   };
 
-  // Example puzzle for the current grid size (multi-line format)
+  // Example puzzle (9x9 multi-line format)
   const getExampleText = () => {
-    if (gridSize === 4) {
-      return "..1.\n.2..\n..3.\n.4..";
-    }
-    if (gridSize === 9) {
-      return "53..7....\n6..195...\n.98....6.\n8...6...3\n4..8.3..1\n7...2...6\n.6....28.\n...419..5\n....8..79";
-    }
-    if (gridSize === 16) {
-      // 16x16 example with dots
-      const row = ".".repeat(16);
-      return Array(16).fill(row).join("\n");
-    }
-    // 25x25
-    const row = ".".repeat(25);
-    return Array(25).fill(row).join("\n");
+    return "53..7....\n6..195...\n.98....6.\n8...6...3\n4..8.3..1\n7...2...6\n.6....28.\n...419..5\n....8..79";
   };
 
-  const cleanedLength = inputText.replace(/\s+/g, "").length;
+  const cleanedLength = inputText.replace(cleanRegex, "").length;
 
   return (
     <Dialog open={isOpen} onClose={handleClose} maxWidth="sm" fullWidth>
       <DialogTitle>Enter Puzzle</DialogTitle>
       <DialogContent>
         <Typography variant="body2" color="text.secondary" paragraph>
-          Paste a puzzle as a single line or as a {gridSize}-line grid ({expectedLength} cells total).
-          Use digits 1-{Math.min(gridSize, 9)}
-          {gridSize > 9 ? ` and letters A-${String.fromCharCode(55 + gridSize)}` : ""} for values,
-          and "." or "0" for empty cells. Whitespace and line breaks are ignored.
+          Paste a puzzle as a single line or as a 9-line grid (81 cells total).
+          Use digits 1-9 for values and "." or "0" for empty cells.
+          Whitespace and line breaks are ignored.
         </Typography>
 
         <TextField
           autoFocus
           multiline
-          rows={gridSize <= 9 ? 4 : 6}
+          rows={4}
           fullWidth
           variant="outlined"
           placeholder={getExampleText()}

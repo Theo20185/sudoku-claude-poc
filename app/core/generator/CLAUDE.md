@@ -58,5 +58,4 @@ const puzzle = puzzleGenerator.generate(9, Difficulty.HARD);
 ## Constraints
 
 - Generated puzzles MUST have exactly one solution
-- Generation may be slow for larger grids (16×16, 25×25)
 - Expert puzzles may take longer to generate (more removal attempts)
