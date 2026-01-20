@@ -18,4 +18,16 @@ export default defineConfig({
   build: {
     target: "esnext",
   },
+  ssr: {
+    // Bundle MUI packages for SSR/prerendering to avoid ESM directory import issues
+    noExternal: [
+      "@mui/material",
+      "@mui/utils",
+      "@mui/system",
+      "@mui/styled-engine",
+      "@mui/icons-material",
+      "@emotion/react",
+      "@emotion/styled",
+    ],
+  },
 });
