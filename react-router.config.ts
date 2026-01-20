@@ -7,4 +7,6 @@ export default {
   appDirectory: "app",
   // Prerender the root route to generate index.html for static hosting
   prerender: ["/"],
+  // Base path for GitHub Pages deployment (must match Vite's base config)
+  basename: process.env.GITHUB_ACTIONS ? "/sudoku-claude-poc/" : "/",
 } satisfies Config;
