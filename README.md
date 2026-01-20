@@ -7,6 +7,8 @@ A feature-rich Sudoku application built as a proof-of-concept to explore what Cl
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue)
 ![React](https://img.shields.io/badge/React-19-61dafb)
 
+**[Live Demo](https://theo20185.github.io/sudoku-claude-poc/)**
+
 ## About This Project
 
 This project was developed collaboratively between a human developer and Claude AI using [Claude Code](https://claude.ai/claude-code), Anthropic's CLI tool for AI-assisted software development. The goal was to see how effectively Claude could:
