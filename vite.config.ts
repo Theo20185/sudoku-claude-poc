@@ -3,6 +3,7 @@ import { defineConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig({
+  base: process.env.GITHUB_ACTIONS ? "/sudoku-claude-poc/" : "/",
   plugins: [reactRouter(), tsconfigPaths()],
   css: {
     modules: {

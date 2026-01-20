@@ -5,4 +5,6 @@ export default {
   ssr: false,
   // Use 'app' as the app directory
   appDirectory: "app",
+  // Prerender the root route to generate index.html for static hosting
+  prerender: ["/"],
 } satisfies Config;
