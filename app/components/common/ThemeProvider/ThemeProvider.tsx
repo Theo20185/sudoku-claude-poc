@@ -4,7 +4,7 @@
  * Wraps the app with MUI ThemeProvider and applies custom Sudoku theme.
  */
 
-import { useMemo, useEffect } from "react";
+import { useMemo, useLayoutEffect } from "react";
 import { ThemeProvider as MuiThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { useThemeStore, useEffectiveThemeMode } from "../../../store/themeStore";
@@ -34,12 +34,14 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
   );
 
   // Apply theme data attribute to document
-  useEffect(() => {
+  // useLayoutEffect ensures this runs before browser paint to prevent flash
+  useLayoutEffect(() => {
     document.documentElement.setAttribute("data-theme", effectiveMode);
   }, [effectiveMode]);
 
   // Apply custom CSS variables for Sudoku colors and theme-aware MUI variables
-  useEffect(() => {
+  // useLayoutEffect ensures CSS variables are set before browser paint to prevent flash
+  useLayoutEffect(() => {
     const root = document.documentElement;
     const isDark = effectiveMode === "dark";
 
