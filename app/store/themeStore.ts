@@ -165,7 +165,7 @@ export const themePresets: ThemePreset[] = [
 ];
 
 const defaultState: ThemeStoreState = {
-  mode: "system",
+  mode: "light",
   primaryColor: "#1976d2",
   secondaryColor: "#dc004e",
   backgroundImage: null,
@@ -186,12 +186,7 @@ export const useThemeStore = create<ThemeStore>()(
 
         toggleMode: () =>
           set((state) => ({
-            mode:
-              state.mode === "light"
-                ? "dark"
-                : state.mode === "dark"
-                ? "system"
-                : "light",
+            mode: state.mode === "light" ? "dark" : "light",
           })),
 
         setPrimaryColor: (color) =>
@@ -257,18 +252,7 @@ export const useThemeStore = create<ThemeStore>()(
   )
 );
 
-// Helper hook to get effective theme mode (resolves 'system')
+// Helper hook to get effective theme mode
 export function useEffectiveThemeMode(): "light" | "dark" {
-  const mode = useThemeStore((state) => state.mode);
-
-  if (mode === "system") {
-    if (typeof window !== "undefined") {
-      return window.matchMedia("(prefers-color-scheme: dark)").matches
-        ? "dark"
-        : "light";
-    }
-    return "light";
-  }
-
-  return mode;
+  return useThemeStore((state) => state.mode);
 }

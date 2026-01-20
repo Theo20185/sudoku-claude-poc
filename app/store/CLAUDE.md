@@ -83,7 +83,7 @@ Theme preferences (persisted to localStorage).
 
 ```typescript
 interface ThemeStoreState {
-  mode: "light" | "dark" | "system";
+  mode: "light" | "dark";
   primaryColor: string;
   secondaryColor: string;
   customColors: SudokuColors;

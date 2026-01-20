@@ -105,7 +105,7 @@ export enum Difficulty {
 }
 
 /** Theme mode */
-export type ThemeMode = "light" | "dark" | "system";
+export type ThemeMode = "light" | "dark";
 
 /** Hints display mode */
 export type HintsMode = "all" | "selected" | "none";

@@ -37,7 +37,7 @@ The human provided high-level requirements and feedback, while Claude wrote the 
 - **Conflict Detection** - Highlights invalid placements in real-time
 - **Undo/Redo** - Full history support for all cell operations
 - **Click-Outside Deselect** - Click outside the grid to deselect the current cell
-- **Dark Mode** - Toggle between light, dark, and system themes
+- **Dark Mode** - Toggle between light and dark themes
 - **Responsive Design** - Works on desktop and tablet screens
 - **Keyboard Navigation** - Full keyboard support with arrow keys and number input
 
@@ -128,7 +128,7 @@ npx playwright test --ui
 | Reset/Clear | 5 | Reset and Clear buttons |
 | Hints | 12 | Hints panel, modes |
 | Conflicts | 8 | Conflict detection |
-| Theme | 10 | Theme switching, persistence |
+| Theme | 12 | Theme switching, persistence |
 | Accessibility | 8 | Keyboard nav, ARIA |
 | User Flows | 5 | Complete workflows |
 | Error Scenarios | 9 | Error handling |

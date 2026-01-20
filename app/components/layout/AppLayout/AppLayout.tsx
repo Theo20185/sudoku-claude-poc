@@ -4,7 +4,7 @@
  * Main layout with header, left panel (1/3), and right panel (2/3).
  */
 
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 import { Header } from "../Header/Header";
 import styles from "./AppLayout.module.scss";
 

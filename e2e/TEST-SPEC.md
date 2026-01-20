@@ -294,19 +294,22 @@ This document specifies the end-to-end tests for the Sudoku application. The app
 ## 12. Theme Switching
 
 ### 12.1 Theme Toggle
-- [x] Click theme toggle → cycles through system/light/dark modes
+- [x] App always starts in light mode
+- [x] Click theme toggle → cycles between light and dark modes
 - [x] Light mode → light background, dark text
 - [x] Dark mode → dark background, light text
-- [x] System mode → matches OS preference
 
 ### 12.2 Theme Persistence
-- [x] Change theme, reload page → theme persists
+- [x] Change theme to dark, reload page → theme persists
+- [x] Light mode persists after reload
 
 ### 12.3 Visual Consistency
 - [x] All grid elements visible in light mode
 - [x] All grid elements visible in dark mode
 - [x] Conflict highlighting visible in both modes
 - [x] Selection highlighting visible in both modes
+- [x] Left panel cards have correct background in light mode
+- [x] Left panel cards have correct background in dark mode
 
 ---
 

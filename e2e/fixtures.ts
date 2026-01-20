@@ -270,28 +270,27 @@ export class SudokuPage {
   }
 
   async getStoredThemeMode(): Promise<string> {
-    // Returns the stored theme mode (light, dark, or system) from localStorage
+    // Returns the stored theme mode (light or dark) from localStorage
     return this.page.evaluate(() => {
       try {
         const stored = localStorage.getItem("sudoku-theme");
         if (stored) {
           const parsed = JSON.parse(stored);
-          return parsed.state?.mode || "system";
+          return parsed.state?.mode || "light";
         }
       } catch {
         // Ignore parse errors
       }
-      return "system";
+      return "light";
     });
   }
 
   async setThemeMode(mode: "light" | "dark") {
     // Toggle until we reach desired mode
-    // Default is "system" which shows as "light" with colorScheme: "light"
-    // Toggle cycle: system -> light -> dark -> system
+    // Default is "light", toggle cycle: light -> dark -> light
     let currentMode = await this.getThemeMode();
     let toggles = 0;
-    const maxToggles = 3;
+    const maxToggles = 2;
 
     while (currentMode !== mode && toggles < maxToggles) {
       await this.toggleTheme();

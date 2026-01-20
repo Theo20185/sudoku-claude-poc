@@ -42,31 +42,7 @@
   --mui-palette-divider: #e0e0e0;
 }
 
-// Dark mode via system preference (before JS loads)
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --sudoku-cell-bg: #303030;
-    --sudoku-cell-border: #424242;
-    --sudoku-box-border: #e0e0e0;
-    --sudoku-given-text: #ffffff;
-    --sudoku-user-text: #90caf9;
-    --sudoku-conflict-bg: #5d4037;
-    --sudoku-selected-bg: #1e3a5f;
-    --sudoku-hint-text: #9e9e9e;
-    --sudoku-highlight-bg: #4a4a00;
-
-    // MUI palette colors (dark mode)
-    --mui-palette-background-default: #121212;
-    --mui-palette-background-paper: #1e1e1e;
-    --mui-palette-text-primary: #ffffff;
-    --mui-palette-text-secondary: #b0b0b0;
-    --mui-palette-action-hover: #424242;
-    --mui-palette-action-selected: #505050;
-    --mui-palette-divider: #424242;
-  }
-}
-
-// Dark mode via explicit data-theme attribute (after JS loads)
+// Dark mode via explicit data-theme attribute
 [data-theme="dark"] {
   --sudoku-cell-bg: #303030;
   --sudoku-cell-border: #424242;
