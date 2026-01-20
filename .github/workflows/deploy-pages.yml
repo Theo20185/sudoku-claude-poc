@@ -35,8 +35,13 @@ jobs:
         env:
           GITHUB_ACTIONS: true
 
-      - name: Copy index.html to 404.html for SPA routing
-        run: cp build/client/index.html build/client/404.html
+      - name: Prepare files for GitHub Pages
+        run: |
+          # Move prerendered files from subdirectory to root
+          mv build/client/sudoku-claude-poc/* build/client/
+          rmdir build/client/sudoku-claude-poc
+          # Copy index.html to 404.html for SPA routing fallback
+          cp build/client/index.html build/client/404.html
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
